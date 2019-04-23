@@ -16,10 +16,10 @@ namespace BaseArchi.SceneManagement.Scenes
     {
         SpriteFont GameFont { get; set; }
         private List<Sprite> m_sprites;
-        Hero hero { get; set; }
+        Hero hero;
         public GameScene()
         {
-            //hero = new Hero(MainGame.heroImgSide, new Vector2(50, 50));
+            
         }
 
         public void LoadContent(ContentManager content)
@@ -28,22 +28,27 @@ namespace BaseArchi.SceneManagement.Scenes
             {
                 { "WalkUp", new Animation(content.Load<Texture2D>("Player/hero-walk-back"), 6) },
                 { "WalkRight", new Animation(content.Load<Texture2D>("Player/hero-walk-side"), 6) },
-                { "WalkDown", new Animation(content.Load<Texture2D>("Player/hero-walk-front"), 6) }
+                { "WalkDown", new Animation(content.Load<Texture2D>("Player/hero-walk-front"), 6) },
+                { "WalkLeft", new Animation(content.Load<Texture2D>("Player/hero-walk-side"), 6, SpriteEffects.FlipHorizontally) }
             };
-            m_sprites = new List<Sprite>()
-            {
-                new Sprite(animations, new Vector2(50, 50))
-                {
-                    Input = new Input()
-                    {
-                        Up = Keys.Z,
-                        Right = Keys.D,
-                        Down = Keys.S,
-                        Left = Keys.Q,
-                    }
-                }
-            };
-            //hero = new Sprite(animations, new Vector2(50, 50));
+            hero = new Hero(animations);
+            hero.ChangePosition(new Vector2(500, 500));
+            m_sprites = new List<Sprite>();
+
+            m_sprites.Add(hero);
+
+            //{
+            //    hero = new Sprite(animations, new Vector2(500, 500))
+            //    {
+            //        Input = new Input()
+            //        {
+            //            Up = Keys.Z,
+            //            Right = Keys.D,
+            //            Down = Keys.S,
+            //            Left = Keys.Q,
+            //        }
+            //    }
+            //};
         }
 
         public void UnloadContent()
@@ -60,6 +65,10 @@ namespace BaseArchi.SceneManagement.Scenes
         public void Draw()
         {
             MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "je suis dans le game", new Vector2(0, 0), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.X : " + hero.Position.X, new Vector2(0, 40), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Y : " + hero.Position.Y, new Vector2(0, 60), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Velocity.X : " + hero.Velocity.X, new Vector2(0, 80), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Velocity.Y : " + hero.Velocity.Y, new Vector2(0, 100), Color.Green);
             foreach (var sprite in m_sprites)
                 sprite.Draw();
         }

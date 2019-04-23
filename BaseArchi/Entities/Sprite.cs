@@ -3,6 +3,7 @@ using BaseArchi.Managers;
 using BaseArchi.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +19,7 @@ namespace BaseArchi.Entities
 
         protected Dictionary<string, Animation> Animations;
 
-        protected Vector2 position
-        {
-            get { return Position; }
-            set
-            {
-                Position = value;
-                if (animationManager != null)
-                    animationManager.Position = Position;
-            }
-        }
+        
 
         public Texture2D Img { get; protected set; }
         #endregion
@@ -51,14 +43,25 @@ namespace BaseArchi.Entities
 
         public Vector2 Velocity;
 
+        protected Vector2 m_position
+        {
+            get { return Position; }
+            set
+            {
+                Position = value;
+                if (animationManager != null)
+                    animationManager._position = Position;
+            }
+        }
+
         #endregion
 
-        public Sprite(Texture2D _img, Vector2 _position) : base (_position)
+        public Sprite(Texture2D _img) : base ()
         {
             Img = _img;
         }
 
-        public Sprite(Dictionary<string, Animation> animations, Vector2 _position) : base(_position)
+        public Sprite(Dictionary<string, Animation> animations) : base()
         {
             Animations = animations;
             animationManager = new AnimationManager(Animations.First().Value);
@@ -80,8 +83,8 @@ namespace BaseArchi.Entities
         {
             if (Velocity.X > 0)
                 animationManager.Play(Animations["WalkRight"]);
-            //else if (Velocity.X < 0)
-            //    animationManager.Play(Animations["WalkLeft"]);
+            else if (Velocity.X < 0)
+                animationManager.Play(Animations["WalkLeft"]);
             else if (Velocity.Y > 0)
                 animationManager.Play(Animations["WalkDown"]);
             else if (Velocity.Y < 0)
@@ -90,26 +93,7 @@ namespace BaseArchi.Entities
 
         protected virtual void Move()
         {
-            if (MainGame.newKeyboardState.IsKeyDown(Input.Right))
-            {
-                Direction = FacingDirection.Right;
-                this.Velocity = new Vector2(Speed, 0);
-            }
-            if (MainGame.newKeyboardState.IsKeyDown(Input.Down))
-            {
-                this.Velocity = new Vector2(0, Speed);
-                Direction = FacingDirection.Down;
-            }
-            if (MainGame.newKeyboardState.IsKeyDown(Input.Left))
-            {
-                this.Velocity = new Vector2(-Speed, 0);
-                Direction = FacingDirection.Left;
-            }
-            if (MainGame.newKeyboardState.IsKeyDown(Input.Up))
-            {
-                this.Velocity = new Vector2(0, -Speed);
-                Direction = FacingDirection.Up;
-            }
+            
         }
 
 
@@ -118,12 +102,7 @@ namespace BaseArchi.Entities
             if (Img != null)
                 MainGame.spriteBatch.Draw(this.Img, this.Position, Color.White);
             else if (animationManager != null)
-            {
-                if (Direction == FacingDirection.Left)
-                    animationManager.Draw(SpriteEffects.FlipHorizontally);
-                else
-                    animationManager.Draw();
-            }
+                 animationManager.Draw();
             else throw new Exception("Exception");
         }
     }

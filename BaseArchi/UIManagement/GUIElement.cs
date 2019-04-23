@@ -10,7 +10,7 @@ namespace BaseArchi.UIManagement
 {
     class GUIElement : GameObject
     {
-        public GUIElement(Vector2 _position) : base (_position)
+        public GUIElement(Vector2 _position) : base ()
         {
 
         }

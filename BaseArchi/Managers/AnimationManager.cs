@@ -15,7 +15,7 @@ namespace BaseArchi.Managers
 
         private float m_timer;
 
-        public Vector2 Position { get; set; }
+        public Vector2 _position { get; set; }
 
         public AnimationManager(Animation _animation)
         {
@@ -58,30 +58,19 @@ namespace BaseArchi.Managers
         public void Draw()
         {
             MainGame.spriteBatch.Draw(m_animation.Texture,
-                                      Position,
+                                      _position,
                                       new Rectangle(m_animation.CurrentFrame * m_animation.FrameWidth,
                                                     0,
                                                     m_animation.FrameWidth,
                                                     m_animation.FrameHeight),
-                                      Color.White);
+                                      Color.White,
+                                      0f,
+                                      Vector2.Zero,
+                                      1f,
+                                      m_animation.SpriteEffects,
+                                      1f);
 
         }
 
-        public void Draw(SpriteEffects se)
-        {
-            MainGame.spriteBatch.Draw(m_animation.Texture, 
-                                        Position,
-                                        new Rectangle(m_animation.CurrentFrame * m_animation.FrameWidth,
-                                                    0,
-                                                    m_animation.FrameWidth,
-                                                    m_animation.FrameHeight), 
-                                        Color.White, 
-                                        0f, 
-                                        Vector2.Zero, 
-                                        1f, 
-                                        se, 
-                                        1f);
-
-        }
     }
 }

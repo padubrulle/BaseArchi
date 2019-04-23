@@ -23,7 +23,9 @@ namespace BaseArchi.Models
 
         public Texture2D Texture { get; private set; }
 
-        public Animation(Texture2D _texture, int _frameCount)
+        public SpriteEffects SpriteEffects { get; private set; }
+
+        public Animation(Texture2D _texture, int _frameCount, SpriteEffects _spriteEffects = SpriteEffects.None)
         {
             Texture = _texture;
 
@@ -32,7 +34,11 @@ namespace BaseArchi.Models
             bIsLooping = true;
 
             FrameSpeed = 0.2f;
+
+            SpriteEffects = _spriteEffects;
         }
+
+
 
     }
 }

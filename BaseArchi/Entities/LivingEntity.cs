@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseArchi.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,19 @@ namespace BaseArchi.Entities
 
         
 
-        public LivingEntity(Texture2D _img, Vector2 _position) : base(_img, _position)
+        public LivingEntity(Texture2D _img) : base(_img)
         {
             
         }
 
+        public LivingEntity(Dictionary<string, Animation> animations) : base(animations)
+        {
+
+        }
+
         public new void Draw()
         {
-            MainGame.spriteBatch.Draw(this.Img, this.Position, Color.White);
+            //MainGame.spriteBatch.Draw(this.Img, this.Position, Color.White);
         }
     }
 }

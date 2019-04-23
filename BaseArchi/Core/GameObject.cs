@@ -11,7 +11,12 @@ namespace BaseArchi.Core
     {
         public Vector2 Position { get; protected set; }
 
-        public GameObject(Vector2 _position)
+        public GameObject()
+        {
+            Position = new Vector2(0,0);
+        }
+
+        public void ChangePosition(Vector2 _position)
         {
             Position = _position;
         }
