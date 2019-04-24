@@ -33,9 +33,14 @@ namespace BaseArchi.Models
 
             bIsLooping = true;
 
-            FrameSpeed = 0.2f;
+            FrameSpeed = 0.35f;
 
             SpriteEffects = _spriteEffects;
+        }
+
+        public bool isFinished()
+        {
+            return CurrentFrame == FrameCount;
         }
 
 

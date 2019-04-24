@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Content\ModelClass.cs" />
     <Compile Include="Content\ServiceProvider.cs" />
     <Compile Include="Core\GameObject.cs" />

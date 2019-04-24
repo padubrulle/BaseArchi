@@ -24,14 +24,28 @@ namespace BaseArchi.SceneManagement.Scenes
 
         public void LoadContent(ContentManager content)
         {
-            var animations = new Dictionary<string, Animation>
+            var heroAnimations = new Dictionary<string, Animation>
             {
                 { "WalkUp", new Animation(content.Load<Texture2D>("Player/hero-walk-back"), 6) },
                 { "WalkRight", new Animation(content.Load<Texture2D>("Player/hero-walk-side"), 6) },
                 { "WalkDown", new Animation(content.Load<Texture2D>("Player/hero-walk-front"), 6) },
-                { "WalkLeft", new Animation(content.Load<Texture2D>("Player/hero-walk-side"), 6, SpriteEffects.FlipHorizontally) }
+                { "WalkLeft", new Animation(content.Load<Texture2D>("Player/hero-walk-side"), 6, SpriteEffects.FlipHorizontally) },
+                { "IdleUp", new Animation(content.Load<Texture2D>("Player/hero-idle-back"),1) },
+                { "IdleRight", new Animation(content.Load<Texture2D>("Player/hero-idle-side"),1) },
+                { "IdleDown", new Animation(content.Load<Texture2D>("Player/hero-idle-front"),1) },
+                { "IdleLeft", new Animation(content.Load<Texture2D>("Player/hero-idle-side"),1, SpriteEffects.FlipHorizontally) },
+                { "AttackUp", new Animation(content.Load<Texture2D>("Player/hero-attack-back"),3) },
+                { "AttackRight", new Animation(content.Load<Texture2D>("Player/hero-attack-side"),3) },
+                { "AttackDown", new Animation(content.Load<Texture2D>("Player/hero-attack-front"),3) },
+                { "AttackLeft", new Animation(content.Load<Texture2D>("Player/hero-attack-side"),3, SpriteEffects.FlipHorizontally) },
+                { "AttackWeaponUp", new Animation(content.Load<Texture2D>("Player/hero-attack-back-weapon"),3) },
+                { "AttackWeaponRight", new Animation(content.Load<Texture2D>("Player/hero-attack-side-weapon"),3) },
+                { "AttackWeaponDown", new Animation(content.Load<Texture2D>("Player/hero-attack-front-weapon"),3) },
+                { "AttackWeaponLeft", new Animation(content.Load<Texture2D>("Player/hero-attack-side-weapon"),3, SpriteEffects.FlipHorizontally) }
             };
-            hero = new Hero(animations);
+
+            hero = new Hero(heroAnimations);
+
             hero.ChangePosition(new Vector2(500, 500));
             m_sprites = new List<Sprite>();
 
@@ -60,17 +74,24 @@ namespace BaseArchi.SceneManagement.Scenes
         {
             foreach (var sprite in m_sprites)
                 sprite.Update(gameTime, m_sprites);
+
+            hero.Update(gameTime);
         }
 
         public void Draw()
         {
             MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "je suis dans le game", new Vector2(0, 0), Color.Green);
-            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.X : " + hero.Position.X, new Vector2(0, 40), Color.Green);
-            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Y : " + hero.Position.Y, new Vector2(0, 60), Color.Green);
-            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Velocity.X : " + hero.Velocity.X, new Vector2(0, 80), Color.Green);
-            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Velocity.Y : " + hero.Velocity.Y, new Vector2(0, 100), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.X : " + hero.Position.X, new Vector2(0, 20), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Y : " + hero.Position.Y, new Vector2(0, 40), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Velocity.X : " + hero.Velocity.X, new Vector2(0, 60), Color.Green);
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "hero.Velocity.Y : " + hero.Velocity.Y, new Vector2(0, 80), Color.Green);
+            hero.Draw();
             foreach (var sprite in m_sprites)
+            {
                 sprite.Draw();
+                MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "sprite.velocity.X" + sprite.Velocity.X, new Vector2(0, 100), Color.Red);
+                MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "sprite.velocity.Y" + sprite.Velocity.Y, new Vector2(0, 120), Color.Red);
+            }
         }
     }
 }

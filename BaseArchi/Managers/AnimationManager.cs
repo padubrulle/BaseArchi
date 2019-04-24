@@ -11,7 +11,7 @@ namespace BaseArchi.Managers
 {
     class AnimationManager
     {
-        private Animation m_animation;
+        public Animation m_animation { get; private set; }
 
         private float m_timer;
 
@@ -66,10 +66,9 @@ namespace BaseArchi.Managers
                                       Color.White,
                                       0f,
                                       Vector2.Zero,
-                                      1f,
+                                      3f,
                                       m_animation.SpriteEffects,
                                       1f);
-
         }
 
     }

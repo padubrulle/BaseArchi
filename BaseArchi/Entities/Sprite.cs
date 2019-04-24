@@ -39,9 +39,11 @@ namespace BaseArchi.Entities
 
         public Input Input;
 
-        public float Speed = 1f;
+        public float Speed = 0f;
 
         public Vector2 Velocity;
+
+        protected bool canMove = true;
 
         protected Vector2 m_position
         {
@@ -65,14 +67,15 @@ namespace BaseArchi.Entities
         {
             Animations = animations;
             animationManager = new AnimationManager(Animations.First().Value);
+
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
         {
+            animationManager._position = Position;
             Move();
 
             SetAnimations();
-
             animationManager.Update(gameTime);
 
             this.Position += this.Velocity;
@@ -81,14 +84,7 @@ namespace BaseArchi.Entities
 
         protected virtual void SetAnimations()
         {
-            if (Velocity.X > 0)
-                animationManager.Play(Animations["WalkRight"]);
-            else if (Velocity.X < 0)
-                animationManager.Play(Animations["WalkLeft"]);
-            else if (Velocity.Y > 0)
-                animationManager.Play(Animations["WalkDown"]);
-            else if (Velocity.Y < 0)
-                animationManager.Play(Animations["WalkUp"]);
+            
         }
 
         protected virtual void Move()

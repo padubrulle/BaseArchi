@@ -13,7 +13,11 @@ namespace BaseArchi.Entities
     {
         public int HP { get; protected set; }
 
-        
+        protected bool isAttacking { get; set; }
+
+        protected bool isMoving = false;
+
+        protected bool isShooting = false;
 
         public LivingEntity(Texture2D _img) : base(_img)
         {
