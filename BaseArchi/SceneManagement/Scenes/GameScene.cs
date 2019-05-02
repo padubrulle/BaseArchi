@@ -46,7 +46,7 @@ namespace BaseArchi.SceneManagement.Scenes
 
             hero = new Hero(heroAnimations);
 
-            hero.ChangePosition(new Vector2(500, 500));
+            hero.ChangePosition(new Vector2(250, 250));
             m_sprites = new List<Sprite>();
 
             m_sprites.Add(hero);

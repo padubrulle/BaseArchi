@@ -19,6 +19,8 @@ namespace BaseArchi.Entities
 
         protected bool isShooting = false;
 
+        protected bool canAttack = true;
+
         public LivingEntity(Texture2D _img) : base(_img)
         {
             

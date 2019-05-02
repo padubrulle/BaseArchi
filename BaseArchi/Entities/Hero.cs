@@ -13,7 +13,8 @@ namespace BaseArchi.Entities
 {
     class Hero : LivingEntity
     {
-
+        float timeBetweenAttacks = 1.0f;
+        float attackTimer = 1.0f;
         public Hero(Texture2D _img) : base(_img)
         {
             Speed = 3f;
@@ -26,18 +27,35 @@ namespace BaseArchi.Entities
 
         public void Update(GameTime gameTime)
         {
-            if(canMove)
+            if(attackTimer <= 0)
+            {
+                attackTimer = 0;
+                canAttack = true;
+            }
+            else
+            {
+                attackTimer -= 1f/30;
+                canAttack = false;
+            }
+
+            if (canMove)
                 Move();
+            if (canAttack)
+            {
+                Attack();
+            }
+
 
             SetAnimations();
 
             animationManager.Update(gameTime);
             isMoving = false;
             isAttacking = false;
-            //isShooting = false;
+            isShooting = !animationManager.m_animation.isFinished();
             Position += Velocity;
             Velocity = Vector2.Zero;
-            MainGame.oldKeyboardState = MainGame.newKeyboardState;
+
+            //MainGame.oldKeyboardState = MainGame.newKeyboardState;
         }
 
         public new void SetAnimations()
@@ -121,9 +139,16 @@ namespace BaseArchi.Entities
                 Velocity = new Vector2(0, -Speed);
                 //Velocity.Y = -Speed;
             }
-            if (MainGame.newKeyboardState.IsKeyDown(Keys.Space) && !MainGame.oldKeyboardState.IsKeyDown(Keys.Space))
+
+        }
+
+        public void Attack()
+        {
+            if (MainGame.newKeyboardState.IsKeyDown(Keys.Space) && !MainGame.oldKeyboardState.IsKeyDown(Keys.Space) && canAttack)
             {
                 ShootProjectile();
+                attackTimer = timeBetweenAttacks;
+                
             }
             if (MainGame.newKeyboardState.IsKeyDown(Keys.A) && !MainGame.oldKeyboardState.IsKeyDown(Keys.A))
             {
@@ -153,6 +178,9 @@ namespace BaseArchi.Entities
             {
                 MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "SHOOT", new Vector2(0, 160), Color.Red);
             }
+
+            MainGame.spriteBatch.DrawString(MainGame.SegoeUI, "attackTimer: " + attackTimer, new Vector2(0, 180), Color.Red);
+
         }
     }
 }

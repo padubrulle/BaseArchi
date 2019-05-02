@@ -25,6 +25,8 @@ namespace BaseArchi.Models
 
         public SpriteEffects SpriteEffects { get; private set; }
 
+        public bool mustBeFinished = false;
+
         public Animation(Texture2D _texture, int _frameCount, SpriteEffects _spriteEffects = SpriteEffects.None)
         {
             Texture = _texture;

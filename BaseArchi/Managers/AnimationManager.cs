@@ -44,15 +44,31 @@ namespace BaseArchi.Managers
         public void Update(GameTime gameTime)
         {
             m_timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (m_timer > m_animation.FrameSpeed)
+            if(m_animation.mustBeFinished && m_timer > m_animation.FrameSpeed)
             {
                 m_timer = 0f;
                 m_animation.CurrentFrame++;
+                if(m_animation.CurrentFrame >= m_animation.FrameCount)
+                {
+                    m_animation.CurrentFrame = 0;
+                    m_animation.mustBeFinished = false;
+                }
+
+            }
+            else if (m_timer > m_animation.FrameSpeed)
+            {
+                m_timer = 0f;
+                m_animation.CurrentFrame++;
+                
 
                 if (m_animation.CurrentFrame >= m_animation.FrameCount)
+                {
                     m_animation.CurrentFrame = 0;
+                }
+
             }
+
+
         }
 
         public void Draw()
